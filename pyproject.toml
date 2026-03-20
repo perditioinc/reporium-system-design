@@ -1,0 +1,15 @@
+[project]
+name = "reporium-system-design"
+version = "0.1.0"
+description = "Architecture documentation, decision logs, and system diagrams for the Reporium platform"
+requires-python = ">=3.11"
+dependencies = [
+    "httpx",
+    "python-dotenv",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.0",
+    "ruff>=0.4",
+]
