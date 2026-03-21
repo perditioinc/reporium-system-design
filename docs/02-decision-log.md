@@ -96,7 +96,7 @@ Nine architecture decisions that shaped Reporium. Each entry explains what we tr
 
 **Context:** The API started as a local development server.
 
-**Decision:** Deploy to Cloud Run. This unblocked three things simultaneously: live metrics collection, the public roadmap endpoint, and the portfolio showcase. The API is accessible at `https://reporium-api-573778300586.us-central1.run.app`.
+**Decision:** Deploy to Cloud Run. This unblocked three things simultaneously: live metrics collection, the public roadmap endpoint, and the portfolio showcase. The API is accessible at the Cloud Run URL (set via `REPORIUM_API_URL` environment variable).
 
 **Tradeoff:** Cloud Run cold starts add latency on the first request after idle. For a portfolio/documentation API, this is acceptable. If the API served production traffic, we would need minimum instances configured.
 

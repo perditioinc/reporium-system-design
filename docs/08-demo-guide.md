@@ -6,7 +6,7 @@ How to present Reporium to different audiences.
 
 ## What to Show First
 
-Start with the live API. Open `https://reporium-api-573778300586.us-central1.run.app/docs` in a browser. This is the interactive Swagger UI.
+Start with the live API. Open `$REPORIUM_API_URL/docs` in a browser (set `REPORIUM_API_URL` in your environment — see `.env.example`). This is the interactive API documentation.
 
 Why start here:
 - It is live, not a slide deck

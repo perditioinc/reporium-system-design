@@ -67,7 +67,7 @@ Architecture documentation, decision logs, and system diagrams for the Reporium 
 
 ## API
 
-Base URL: `https://reporium-api-573778300586.us-central1.run.app`
+Base URL: Set `REPORIUM_API_URL` in your environment (see `.env.example`)
 
 | Endpoint | Description |
 |----------|-------------|
