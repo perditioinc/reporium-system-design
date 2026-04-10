@@ -1,47 +1,35 @@
 # 04 - Scale Analysis
 
-## Current State (826 repos)
+## Current State (~1,680 repos indexed)
 
 | Metric | Value | Source |
 |--------|-------|--------|
-| Total repos tracked | 826 | API /stats and index.json |
+| Total repos tracked | 1,641 | v_repo_activity_trend (row count) |
+| Repos with embeddings | 1,680 | repo_embeddings (current entries) |
+| Knowledge graph edges | 74,783 | knowledge_graph table |
+| pgvector embeddings | All repos | repo_embeddings (append-only, ADR-10) |
 | Languages | 29 | API /stats |
-| forksync duration | 143s | SYNC_REPORT |
 | forksync concurrency | 50 | asyncio.Semaphore(50) |
-| Forks checked | 792 | SYNC_REPORT |
-| Errors | 1 | SYNC_REPORT |
-| reporium-db sync duration | 127.1s | LAST_RUN |
-| API calls (db sync) | 9 | LAST_RUN |
-| Rate limit remaining after sync | 4,876 | LAST_RUN |
 | Rate limit budget | 5,000/hr | GitHub API |
 
-The platform is healthy at current scale. Both sync jobs complete in under 3 minutes. Rate limit usage is minimal (124 of 5,000 consumed).
+The platform is healthy at current scale. pgvector embeddings cover all indexed repos. The knowledge graph is rebuilt atomically on each ingest run (ADR-11). Rate limit headroom remains substantial — ~1,680 repos consumes roughly 5% of a single token's hourly budget.
 
 ---
 
 ## Bottleneck Analysis by Tier
 
-### Tier 1: 826 repos (current)
+### Tier 1: ~1,680 repos (current)
 
 **Bottleneck:** None. Everything works.
 
-- forksync: 143s, well within the nightly window
-- reporium-db: 127.1s, 9 API calls
-- Rate limit: 2.5% consumed (124/5,000)
+- forksync: ~290s estimated (scaled from 826-repo baseline of 143s)
+- reporium-db: ~260s estimated (scaled from 826-repo baseline of 127.1s)
+- Rate limit: ~5% consumed
 - Neon: free tier, no issues
-- File sizes: index.json ~2MB, manageable
+- Knowledge graph: 74,783 edges, atomic rebuild on each ingest run
+- pgvector: embeddings on all 1,680 repos, append-only writes
 
-### Tier 2: 1,000 repos
-
-**Bottleneck:** None expected.
-
-- forksync: ~170s estimated (linear scaling from 143s/792 forks)
-- reporium-db: ~155s estimated (linear scaling from 127.1s/826 repos)
-- Rate limit: ~3% consumed
-- Total pipeline: under 6 minutes
-- No architecture changes needed
-
-### Tier 3: 10,000 repos
+### Tier 2: 10,000 repos
 
 **Bottleneck:** Rate limits and file sizes.
 
@@ -91,15 +79,15 @@ The platform is healthy at current scale. Both sync jobs complete in under 3 min
 
 GitHub API rate limit: 5,000 requests per hour per token.
 
-| Operation | Calls at 826 | Calls at 10K | Calls at 100K |
-|-----------|-------------|-------------|--------------|
-| forksync (GraphQL) | 9 | ~30 | ~300 |
-| forksync (sync calls) | ~100 (ETags) | ~1,000 | ~10,000 |
-| reporium-db sync | 9 | ~100 | ~1,000 |
-| **Total** | **~118** | **~1,130** | **~11,300** |
+| Operation | Calls at ~1,680 | Calls at 10K | Calls at 100K |
+|-----------|----------------|-------------|--------------|
+| forksync (GraphQL) | ~20 | ~30 | ~300 |
+| forksync (sync calls) | ~200 (ETags) | ~1,000 | ~10,000 |
+| reporium-db sync | ~18 | ~100 | ~1,000 |
+| **Total** | **~238** | **~1,130** | **~11,300** |
 | **Tokens needed** | 1 | 1 | 3 |
 
-At current scale (826 repos), we use 2.5% of a single token's budget. We have headroom to grow 10x before needing architectural changes.
+At current scale (~1,680 repos), we use ~5% of a single token's hourly budget. We have headroom to grow 5-6x before needing architectural changes.
 
 ---
 
@@ -109,10 +97,9 @@ All times assume nightly execution starting at 02:00 UTC.
 
 | Tier | forksync | db sync | ingestion | Total | Window OK? |
 |------|----------|---------|-----------|-------|------------|
-| 826 | 143s | 127s | N/A | ~5min | Yes |
-| 1K | ~170s | ~155s | ~60s | ~7min | Yes |
+| ~1,680 (current) | ~290s | ~260s | ~120s | ~11min | Yes |
 | 10K | ~600s | ~400s | ~300s | ~22min | Yes |
 | 50K | ~3,600s | ~1,800s | ~1,200s | ~110min | Tight |
 | 100K | sharded | sharded | sharded | ~180min | Needs splitting |
 
-The nightly window (02:00-06:00 UTC) gives us 4 hours. At 50K repos, we approach the limit and need to consider splitting the pipeline across multiple windows or running incremental syncs.
+The nightly window (02:00-06:00 UTC) gives us 4 hours. At current scale (~1,680 repos), the full pipeline completes in under 15 minutes. At 50K repos we approach the limit and would need incremental syncs or multiple scheduling windows.
