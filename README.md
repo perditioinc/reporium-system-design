@@ -1,5 +1,7 @@
 # reporium-system-design
 
+![License: MIT](https://img.shields.io/badge/license-MIT-brightgreen)
+
 Architecture documentation, decision logs, and system diagrams for the Reporium platform.
 
 <!-- perditio-badges suite=Reporium workflow=test.yml -->
