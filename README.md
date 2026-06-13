@@ -12,7 +12,7 @@ Architecture documentation, decision logs, and system diagrams for the Reporium 
 ## Platform at a Glance
 
 ```
-  GitHub (826 repos)
+  GitHub (1,898 repos)
         |
         v
   +--------------+       +----------------+
@@ -43,7 +43,7 @@ Architecture documentation, decision logs, and system diagrams for the Reporium 
 
 | Metric | Value |
 |--------|-------|
-| Repos tracked | 826 |
+| Repos tracked | 1,898 |
 | Languages | 29 |
 | Public repos | 50+ |
 | Neon tables | 13 |

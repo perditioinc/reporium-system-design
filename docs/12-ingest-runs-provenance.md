@@ -1,5 +1,9 @@
 # 12 - Ingest Runs Provenance
 
+**Status:** Accepted
+**Date:** 2026-04-09
+**Tracking:** KAN-102 (Knowledge Graph Data Trust epic - provenance for atomic rebuild)
+
 One decision about what the `ingest_runs` table tracks — expanding it from a status log into a full provenance record for each ingestion.
 
 ---
