@@ -1,5 +1,9 @@
 # 13 - Tag Canonicalization
 
+**Status:** Accepted
+**Date:** 2026-04-09
+**Tracking:** KAN-104 (Knowledge Graph Data Trust epic)
+
 One decision about how integration tags from the AI enricher are normalized before they are used to build graph edges.
 
 ---
