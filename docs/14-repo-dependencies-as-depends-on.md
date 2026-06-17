@@ -1,5 +1,9 @@
 # 14 - Repo Dependencies as DEPENDS_ON
 
+**Status:** Accepted
+**Date:** 2026-04-09
+**Tracking:** KAN-100 (Knowledge Graph Data Trust epic)
+
 One decision about the source of truth for `DEPENDS_ON` edges in the knowledge graph — switching from description keyword matching to structured dependency extraction.
 
 ---

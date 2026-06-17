@@ -1,5 +1,9 @@
 # 10 - Append-Only Embeddings
 
+**Status:** Accepted
+**Date:** 2026-04-09
+**Tracking:** KAN-103 (Knowledge Graph Data Trust epic)
+
 One decision about how we store vector embeddings for repos — switching from overwrite to history-preserving append-only rows.
 
 ---

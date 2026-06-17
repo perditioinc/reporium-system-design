@@ -1,5 +1,9 @@
 # 11 - Atomic Graph Rebuild
 
+**Status:** Accepted
+**Date:** 2026-04-09
+**Tracking:** KAN-102 (Knowledge Graph Data Trust epic)
+
 One decision about how the knowledge graph is rebuilt — switching from delete-then-insert to a staging table swap with validation.
 
 ---

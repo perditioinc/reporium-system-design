@@ -1,6 +1,8 @@
 # Phase 2-3 Follow-ups
 
-Status: draft
+**Status:** Draft
+**Date:** 2026-04-12
+**Tracking:** KAN-120 (Knowledge Graph Data Trust epic - phase 2-3 follow-ups)
 
 This note captures the post-backfill decisions that should drive the next
 feature-completeness and scaling wave after Phase 1 observability lands.
