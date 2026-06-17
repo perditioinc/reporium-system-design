@@ -1,5 +1,9 @@
 # 16 - MCP HTTP Bridge and Workato Authentication Model
 
+**Status:** Archived
+**Date:** 2026-04-15
+**Tracking:** KAN-120 (teardown / archival)
+
 > **ARCHIVED 2026-05-20:** Workato access lost and the Cloud Run service `reporium-mcp-http` has been deleted.
 > The two-token auth scheme (`X-MCP-Token` outer, `X-App-Token` inner) is no longer in effect.
 > Document retained for historical reference; do not treat as current architecture.
